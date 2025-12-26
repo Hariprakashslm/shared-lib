@@ -1,25 +1,16 @@
-const createLogger = (serviceName) => ({
-  info: (message, meta = {}) =>
-    console.log(
-      JSON.stringify({
-        level: "INFO",
-        service: serviceName,
-        message,
-        ...meta,
-        timestamp: new Date().toISOString(),
-      })
-    ),
+const winston = require("winston");
 
-  error: (message, meta = {}) =>
-    console.error(
-      JSON.stringify({
-        level: "ERROR",
-        service: serviceName,
-        message,
-        ...meta,
-        timestamp: new Date().toISOString(),
-      })
-    ),
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || "info",
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
+  defaultMeta: {
+    service: "api-gateway",
+  },
+  transports: [new winston.transports.Console()],
 });
 
-module.exports = { createLogger };
+module.exports = logger;
