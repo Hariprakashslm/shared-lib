@@ -1,8 +1,14 @@
-module.exports = (err, req, res, next) => {
-  const status = err.statusCode || 500;
+module.exports = (label) => (err, req, res, next) => {
+  if (label) {
+    logger.error(label, {
+      traceId: req.traceId,
+      message: err.message,
+    });
+  }
 
-  res.status(status).json({
-    message: err.message || "Internal Server Error",
-    correlationId: req.correlationId,
+  res.status(503).json({
+    success: false,
+    message: "Service temporarily unavailable",
+    traceId: req.traceId,
   });
 };
