@@ -1,5 +1,25 @@
-exports.success = (res, data, status = 200) =>
-  res.status(status).json({ data });
+const success = (res, data, message = "Success", status = 200) => {
+  return res.status(status).json({
+    success: true,
+    message,
+    data,
+  });
+};
 
-exports.error = (res, message, status = 500) =>
-  res.status(status).json({ message });
+const error = (
+  res,
+  message = "Something went wrong",
+  status = 500,
+  errors = null
+) => {
+  return res.status(status).json({
+    success: false,
+    message,
+    errors,
+  });
+};
+
+module.exports = {
+  success,
+  error,
+};

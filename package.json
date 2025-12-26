@@ -9,6 +9,7 @@
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^8.0.0",
+    "morgan": "^1.10.1",
     "uuid": "^9.0.1",
     "winson": "^1.0.0"
   }
